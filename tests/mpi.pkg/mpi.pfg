@@ -9,7 +9,7 @@
 mpi.application # mpirun:
   shell = mpi.mpirun
   shell.tasks = 4
-  shell.hostfile = localhost
+  ; shell.hostfile = localhost
   ; shell.extra = -mca mpi_show_mca_params enviro
 
 
