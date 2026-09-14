@@ -577,6 +577,7 @@ pyre_test_python_testcase(tests/pyre.pkg/components/component_instance_public_lo
 pyre_test_python_testcase(tests/pyre.pkg/components/component_aliases.py --functor.μ=0.10 --gaussian.σ=0.10)
 pyre_test_python_testcase(tests/pyre.pkg/components/component_slots.py)
 pyre_test_python_testcase(tests/pyre.pkg/components/component_list.py)
+pyre_test_python_testcase(tests/pyre.pkg/components/component_list_ints.py)
 pyre_test_python_testcase(tests/pyre.pkg/components/component_dict.py)
 pyre_test_python_testcase(tests/pyre.pkg/components/quad.py)
 pyre_test_python_testcase(tests/pyre.pkg/components/monitor.py)

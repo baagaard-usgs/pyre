@@ -64,14 +64,58 @@ class sleep(pyre.component, family="sample.activities.sleep", implements=activit
         return "sleeping"
 
 
-# the container
+# the containers
+class activities_empty(pyre.component, family="sample.activities_empty"):
+    """a component container"""
+
+    activities = pyre.properties.list(schema=activity())
+
+
+class activities_none(pyre.component, family="sample.activities_none"):
+    """a component container"""
+
+    activities = pyre.properties.list(schema=activity(), default=None)
+
+
+class activities_default(pyre.component, family="sample.activities_default"):
+    """a component container"""
+
+    activities = pyre.properties.list(schema=activity(), default=[study, relax])
+
+
 class person(pyre.component, family="sample.person"):
     """a component container"""
 
     activities = pyre.properties.list(schema=activity())
 
 
-def test():
+def test_activities():
+    # easy access to time units
+    from pyre.units.time import hour
+
+    list_empty = activities_empty("empty")
+    list_none = activities_none("none")
+    list_default = activities_default("default")
+
+    # No default (should be [])
+    assert len(list_empty.activities) == 0
+
+    # default = None
+    assert list_none.activities is None
+
+    # default = [study, relax]
+    assert len(list_default.activities) == 2
+    task = list_default.activities[0]
+    assert task.pyre_name == "sample.activities.study"
+    assert task.pyre_family() == "sample.activities.study"
+    assert task.duration == 4 * hour
+    task = list_default.activities[1]
+    assert task.pyre_name == "sample.activities.relax"
+    assert task.pyre_family() == "sample.activities.relax"
+    assert task.duration == 2 * hour
+
+
+def test_person():
     # easy access to time units
     from pyre.units.time import hour
 
@@ -103,12 +147,10 @@ def test():
     assert task.pyre_family() == "sample.activities.sleep"
     assert task.duration == 3 * hour
 
-    return
-
 
 # main
 if __name__ == "__main__":
-    test()
-
+    test_activities()
+    test_person()
 
 # end of file
