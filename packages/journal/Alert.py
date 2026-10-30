@@ -39,8 +39,13 @@ class Alert(Renderer):
         resetColor = palette["reset"]
         severityColor = palette[severity]
 
-        # tag using either the app name or the channel severity
-        tag = application or severity
+        # reach the sentinel that marks the application note as not yet set
+        from .Chronicler import Chronicler
+
+        # the application is unset while the note is empty or still carries the sentinel default
+        unset = application in ("", Chronicler.unregistered)
+        # tag with the application name when one is registered, otherwise the channel severity
+        tag = severity if unset else application
         # generate
         buffer = [
             severityColor,
